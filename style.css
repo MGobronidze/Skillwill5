@@ -80,6 +80,10 @@ a{
 	border-radius: 30px;
 }
 #quiz-sec>h2{
-	font-size: 30px;
+	font-size: 40px;
 	line-height: 50px;
+}
+#quiz-sec>p{
+	font-size: 20px;
+	line-height: 30px;
 }
