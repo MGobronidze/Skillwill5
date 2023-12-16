@@ -142,7 +142,7 @@ let quizArr = [
             },
             {
                 ans: "<background> yellow </background>",
-                valid: "fasle"
+                valid: "false"
             },
             {
                 ans: "<background style ='background-color: yellow;'>",
@@ -178,7 +178,6 @@ quizArr.forEach( el =>{
     // ვადგენთ ინდექსს ქვიზის მასივში
     let quesIndex = quizArr.indexOf(el);
     answ.forEach(ans => {
-
         // თითოეული სავარაუდო პასუხისთვის შევქმნათ ინპუტის ველები ატრიბუტებით
         const ansEl = document.createElement("input");
         ansEl.setAttribute("id", ans);
@@ -229,7 +228,7 @@ btnEl.addEventListener("click", (event=>{
             // ქულა დავტოვოთ უცვლელი
             points = points;
         }
-        scoreEl.innerHTML = `You have ${points} points`;
+        scoreEl.innerHTML = `You have ${points} point${points>1?"s":""}`;
         // console.log(el.getAttribute("class")==="true", index, el.checked)
     })
 }))
