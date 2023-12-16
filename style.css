@@ -80,10 +80,32 @@ a{
 	border-radius: 30px;
 }
 #quiz-sec>h2{
-	font-size: 40px;
+	font-size: 45px;
 	line-height: 50px;
 }
-#quiz-sec>p{
-	font-size: 20px;
+#quiz-sec>div{
+	margin: 15px;
+	font-size: 25px;
+	color: brown;
+	font-weight: bold;
+}
+.quiz-par>p{
+	font-size: 30px;
+	line-height: 40px;
+}
+.quiz-par>label{
+	font-size: 25px;
 	line-height: 30px;
+	margin: 10px;
+}
+button{
+	width: 200px;
+	margin-top: 40px;
+	padding: 20px;
+	border: none;
+	cursor: pointer;
+	font-size: 25px;
+	background-color: brown;
+	color: whitesmoke;
+	border-radius: 50px;
 }

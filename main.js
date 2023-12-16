@@ -50,12 +50,17 @@ sectionEl.setAttribute("id","quiz-sec")
 let quizH2El = document.createElement("h2");
 let quizTextEl = document.createTextNode("Quizz");
 
+// შევქმნათ და დავმატოთ ქულათა რაოდენობა
+let points = 0;
+let scoreEl = document.createElement("div");
+scoreEl.innerHTML = `You have ${points} point`;
+
 // დავამატოთ სექცია დოკუმენტში
 bodyEl.append(sectionEl);
 
 // დავამატოთ სექციის სათაური
 quizH2El.append(quizTextEl);
-sectionEl.append(quizH2El);
+sectionEl.append(quizH2El, scoreEl);
 
 // შევქმნათ ქვიზის მასივი
 let quizArr = [ 
@@ -120,7 +125,7 @@ let quizArr = [
             },
             {
                 ans: "<break>",
-                valid: "fasle"
+                valid: "false"
             },
             {
                 ans: "<br>",
@@ -153,8 +158,10 @@ sectionEl.append(quizForm);
 
 // ქვიზის მასივიდან დავამატოთ კითხვები და სავარაუდო პასუხები ქვიზის ფორმაში
 quizArr.forEach( el =>{
+
     //შევქმნათ სექცია თითოეული კითხვისთვის    
     const secEl =  document.createElement("section");
+    secEl.classList.add("quiz-par")
     
     // კითხვა
     const questionEl = document.createElement("p");
@@ -167,27 +174,62 @@ quizArr.forEach( el =>{
     // სავარაუდო პასუხი
     const answ = [ans1, ans2, ans3] = [el.answer[0].ans, el.answer[1].ans, el.answer[2].ans];
     const validity =[val1, val2, val3] =[el.answer[0].valid, el.answer[1].valid, el.answer[2].valid];
+
+    // ვადგენთ ინდექსს ქვიზის მასივში
+    let quesIndex = quizArr.indexOf(el);
     answ.forEach(ans => {
 
         // თითოეული სავარაუდო პასუხისთვის შევქმნათ ინპუტის ველები ატრიბუტებით
         const ansEl = document.createElement("input");
         ansEl.setAttribute("id", ans);
         ansEl.setAttribute("value", ans);
-        ansEl.setAttribute("name", "quiz");
+        ansEl.setAttribute("name", `quiz-${quesIndex}`);
         ansEl.setAttribute("type", "radio");
+
+        // ვადგენთ ინდექსს პასუხების მასივში
+        let index = answ.indexOf(ans);
+        ansEl.classList.add(validity[index]);
 
         // თითოეული სავარაუდო პასუხისთვის შევქმნათ ლეიბლები ატრიბუტებით
         const ansLabelEl = document.createElement("label");
         ansLabelEl.innerText=ans;
         ansLabelEl.setAttribute("for", ans);
 
-        // ვადგენთ ინდექსს პასუხების მასივში
-        let index = answ.indexOf(ans);
-        ansLabelEl.classList.add(validity[index]);
-
         // დავამატოთ სავარაუდო პასუხები სექციაში;
         secEl.append(ansEl, ansLabelEl);
     })
 }
 )
+// შევქმნათ და დავმატოთ საბმით ღილაკი ქვიზის სექციაში
+let btnEl = document.createElement("button");
+btnEl.innerHTML = "Submit";
+btnEl.setAttribute("type","submit")
+quizForm.append(btnEl);
 
+// სწორი პასუხი გავამწვანოთ მონიშვნის შემთხვევაში, არასწორი გავაწითლოთ
+btnEl.addEventListener("click", (event=>{
+    event.preventDefault()
+    const radioBtns= document.querySelectorAll('input');
+    const labels = document.querySelectorAll('label')
+    const radioBtnsArr = Array.from(radioBtns);
+    const labelsArr = Array.from(labels);
+
+    // console.log(radioBtnsArr);
+    // console.log(labelsArr);
+
+    radioBtnsArr.forEach(el=>{
+        let index = radioBtnsArr.indexOf(el);
+        if(el.getAttribute("class")==="true" && el.checked){
+            labelsArr[index].style.color="rgb(90, 207, 90";
+            // ქულა გავზარდოთ ერთით
+            points +=1;
+        }
+        if(el.getAttribute("class")==="false" && el.checked){
+            labelsArr[index].style.color="rgb(249, 17, 17)";
+            // ქულა დავტოვოთ უცვლელი
+            points = points;
+        }
+        scoreEl.innerHTML = `You have ${points} points`;
+        // console.log(el.getAttribute("class")==="true", index, el.checked)
+    })
+}))
